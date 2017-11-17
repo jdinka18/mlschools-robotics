@@ -29,7 +29,6 @@
 
 package org.firstinspires.ftc.teamcode;
 
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
@@ -43,23 +42,23 @@ import com.qualcomm.robotcore.util.Range;
  * The names of OpModes appear on the menu of the FTC Driver Station.
  * When an selection is made from the menu, the corresponding OpMode
  * class is instantiated on the Robot Controller and executed.
- *
+ * <p>
  * This particular OpMode just executes a basic Tank Drive Teleop for a two wheeled robot
  * It includes all the skeletal structure that all iterative OpModes contain.
- *
+ * <p>
  * Use Android Studios to Copy this Class, and Paste it into your team's code folder with a new name.
  * Remove or comment out the @Disabled line to add this opmode to the Driver Station OpMode list
  */
 
-@TeleOp(name="Interative TeleOp Mode", group="Iterative Opmode")
-public class InterativeTeleOpMode extends OpMode
-{
+@TeleOp(name = "Interative TeleOp Mode", group = "Iterative Opmode")
+public class InterativeTeleOpMode extends OpMode {
     // Declare global OpMode members.
     private ElapsedTime runtime = new ElapsedTime();
     private DcMotor leftDrive = null;
     private DcMotor rightDrive = null;
     private DcMotor armMotor = null;
     private DcMotor extendingArm = null;
+    private DcMotor extendingOppositeArm = null;
     private Servo leftGrab = null;
     private Servo rightGrab = null;
 
@@ -78,6 +77,7 @@ public class InterativeTeleOpMode extends OpMode
         rightDrive = hardwareMap.get(DcMotor.class, "rightDrive");
         armMotor = hardwareMap.get(DcMotor.class, "armMotor");
         extendingArm = hardwareMap.get(DcMotor.class, "extendingArm");
+        extendingOppositeArm = hardwareMap.get(DcMotor.class, "extendingOppositeArm");
         leftGrab = hardwareMap.get(Servo.class, "leftGrab");
         rightGrab = hardwareMap.get(Servo.class, "rightGrab");
 
@@ -109,17 +109,13 @@ public class InterativeTeleOpMode extends OpMode
 
         time.reset();
 
-        while(time.time() < 0.6) {
+        while (time.time() < 0.6) {
 
             armMotor.setPower(0.5);
 
         }
 
         armMotor.setPower(0);
-
-        // set to
-        leftGrab.setPosition(1);
-        rightGrab.setPosition(0);
 
         // get the grabbers ready to grip the blocks
         leftGrab.setPosition(0.9);
@@ -165,34 +161,32 @@ public class InterativeTeleOpMode extends OpMode
         rightPower   = Range.clip(drive - turn, -1.0, 1.0) ;
         */
 
-        // let armPower = 0
+        // initialize values
         armPower = 0;
 
-        // let extendingArmPower = 0
         extendingArmPower = 0;
 
 
         // get power value from gamepad1 (person 1) y position for driving
-        leftPower  = -gamepad1.left_stick_y ;
-        rightPower = -gamepad1.right_stick_y ;
+        leftPower = -gamepad1.left_stick_y;
+        rightPower = -gamepad1.right_stick_y;
 
         // gently raise or lower the arm (-0.5 lower | 0.5 raise)
         // get power value from gamepad2 (person 2) y position for extending arm
 
-        if(leftGrab.getPosition() > 0.5 && rightGrab.getPosition() < 0.5) {
+        if (leftGrab.getPosition() > 0.5 && rightGrab.getPosition() < 0.5) {
             double armValue = gamepad2.right_stick_y;
-            armPower    = Range.clip(armValue, -0.5, 0.5) ;
+            armPower = Range.clip(armValue, -0.5, 0.5);
         }
 
         // move the slider (extendingArm) using left (backward) and right triggers (forward)
 
-        if(gamepad2.right_trigger>0)
+        if (gamepad2.right_trigger > 0)
             extendingArmPower = gamepad2.right_trigger;
-        else if(gamepad2.left_trigger>0)
+        else if (gamepad2.left_trigger > 0)
             extendingArmPower = -gamepad2.left_trigger;
         else
             extendingArmPower = 0;
-
 
 
         // gently raise or lower the arm (-0.5 lower | 0.5 raise)
@@ -221,27 +215,27 @@ public class InterativeTeleOpMode extends OpMode
 
         // forward position or grabbed block
         if (gamepad2.y) {
-            leftGrab.setPosition(0);
-            rightGrab.setPosition(1);
+            leftGrab.setPosition(1);
+            rightGrab.setPosition(0);
             telemetry.addData("pressed", "Y");
 
             // side position
         } else if (gamepad2.b) {
             leftGrab.setPosition(0.5);
             rightGrab.setPosition(0.5);// set position to 45 degrees
-            telemetry.addData("pressed", "X");
+            telemetry.addData("pressed", "B");
 
             // ready to grab position \ /
         } else if (gamepad2.a) {
-            rightGrab.setPosition(0.1); // set position to 45 degrees
             leftGrab.setPosition(0.9); // set position to 45 degrees
-            telemetry.addData("pressed", "B");
+            rightGrab.setPosition(0.1); // set position to 45 degrees
+            telemetry.addData("pressed", "A");
 
             // stowed position
         } else if (gamepad2.x) {
-            leftGrab.setPosition(1);
-            rightGrab.setPosition(0);
-            telemetry.addData("pressed", "A");
+            leftGrab.setPosition(0);
+            rightGrab.setPosition(1);
+            telemetry.addData("pressed", "X");
         }
 
         // Send calculated power to wheels
@@ -275,7 +269,6 @@ public class InterativeTeleOpMode extends OpMode
 
         telemetry.addData("Status", "Terminated Interative TeleOp Mode");
         telemetry.update();
-
 
 
     }
