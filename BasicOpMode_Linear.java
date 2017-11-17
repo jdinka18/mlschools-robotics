@@ -94,17 +94,6 @@ public class BasicOpMode_Linear extends LinearOpMode {
             leftPower    = Range.clip(driveLeft , -1.0, 1.0) ;
             rightPower   = Range.clip(driveRight, -1.0, 1.0) ;
 
-            //new
-            //double drive = -gamepad1.left_stick_y;
-            //double turn  =  gamepad1.right_stick_x;
-            //leftPower    = Range.clip(drive + turn, -1.0, 1.0) ;
-            //rightPower   = Range.clip(drive - turn, -1.0, 1.0) ;
-
-            // Tank Mode uses one stick to control each wheel.
-            // - This requires no math, but it is hard to drive forward slowly and keep straight.
-            // leftPower  = -gamepad1.left_stick_y ;
-            // rightPower = -gamepad1.right_stick_y ;
-
             // Send calculated power to wheels
             leftDrive.setPower(leftPower);
             rightDrive.setPower(rightPower);
