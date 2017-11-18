@@ -58,7 +58,6 @@ public class InterativeTeleOpMode extends OpMode {
     private DcMotor rightDrive = null;
     private DcMotor armMotor = null;
     private DcMotor extendingArm = null;
-    private DcMotor extendingOppositeArm = null;
     private Servo leftGrab = null;
     private Servo rightGrab = null;
 
@@ -77,13 +76,12 @@ public class InterativeTeleOpMode extends OpMode {
         rightDrive = hardwareMap.get(DcMotor.class, "rightDrive");
         armMotor = hardwareMap.get(DcMotor.class, "armMotor");
         extendingArm = hardwareMap.get(DcMotor.class, "extendingArm");
-        extendingOppositeArm = hardwareMap.get(DcMotor.class, "extendingOppositeArm");
         leftGrab = hardwareMap.get(Servo.class, "leftGrab");
         rightGrab = hardwareMap.get(Servo.class, "rightGrab");
 
         /*
         left and right drive = motion of robot
-        armMotor = motion of arm
+        armMotor = motion of arm (lifting the grippers)
         extendingArm = motion of slider (used for dropping the fake person)
         left and right grab = grippers to get the blocks
          */
@@ -145,7 +143,9 @@ public class InterativeTeleOpMode extends OpMode {
         // Setup a variable for each drive wheel to save power level for telemetry
         double leftPower;
         double rightPower;
+        // sets the power level for lifting the grippers
         double armPower;
+        // power level for the sliders
         double extendingArmPower;
 
         // Choose to drive using either Tank Mode, or POV Mode
@@ -171,8 +171,10 @@ public class InterativeTeleOpMode extends OpMode {
         leftPower = -gamepad1.left_stick_y;
         rightPower = -gamepad1.right_stick_y;
 
-        // gently raise or lower the arm (-0.5 lower | 0.5 raise)
+        // gently raise or lower the arm (restricted to -0.5 lower | 0.5 raise)
         // get power value from gamepad2 (person 2) y position for extending arm
+
+        //TODO: consider using 2 buttons: one to grab glyphs and one to grab the relics (which are smaller on top).
 
         if (leftGrab.getPosition() > 0.5 && rightGrab.getPosition() < 0.5) {
             double armValue = gamepad2.right_stick_y;
