@@ -41,8 +41,8 @@ import org.firstinspires.ftc.robotcontroller.external.samples.HardwarePushbot;
 public class TimeBasedAutoMode extends LinearOpMode {
 
     /* Declare OpMode members. */
-    HardwareSkyBot robot = new HardwareSkyBot();   // Use a Pushbot's hardware
-    private ElapsedTime runtime = new ElapsedTime();
+    HardwareSkyBot robot = new HardwareSkyBot();   // Use a SkyBot's hardware
+    //private ElapsedTime runtime = new ElapsedTime();
 
 
     // power variables for motors (from SkyBot Class)
@@ -55,6 +55,9 @@ public class TimeBasedAutoMode extends LinearOpMode {
     // servo positions (from SkyBot Class)
     public final static double LEFTBLOCK_READY = 0.9;
     public final static double RIGHTBLOCK_READY = 0.1;
+
+    public final static double LEFTBLOCK_GRAB = 1;
+    public final static double RIGHTBLOCK_GRAB = 0;
 
     @Override
     public void runOpMode() {
@@ -72,29 +75,48 @@ public class TimeBasedAutoMode extends LinearOpMode {
         // Wait for the game to start (driver presses PLAY)
         waitForStart();
 
+        // Raise Arm with 50% power
+        robot.armMotor.setPower(POWER_HALF);
+        sleep(500);
 
-        // Step 1 - move robot forward with full speed
 
+        // Get the grippers ready to grab the block
+        robot.leftGrab.setPosition(LEFTBLOCK_READY);
+        robot.rightGrab.setPosition(RIGHTBLOCK_READY);
+        sleep(1000);
+
+
+        // lower the arm
+        robot.armMotor.setPower(-POWER_HALF);
+        sleep(500);
+
+        // Grab the block
+        robot.leftGrab.setPosition(LEFTBLOCK_GRAB);
+        robot.rightGrab.setPosition(RIGHTBLOCK_GRAB);
+
+        // Move robot forward with full speed
         robot.leftDrive.setPower(POWER_FULL);
         robot.rightDrive.setPower(POWER_FULL);
         sleep(1000);
 
-        // Step 2 - let turn the robot!
+        /* Step 2 - let turn the robot! ???
 
         robot.leftDrive.setPower(POWER_HALF);
         robot.rightDrive.setPower(-POWER_HALF);
         sleep(600);
+        */
 
-        // Step 3 - park robot by stopping the motors
+        // Park robot by stopping the motors
 
         robot.leftDrive.setPower(POWER_STOP);
         robot.rightDrive.setPower(POWER_STOP);
         sleep(1000);
 
-        // Step 4 - lift the grippers
+        /*Lift the grippers
 
         robot.armMotor.setPower(POWER_HALF);
         sleep(500);
+        */
 
         // Step 5? - Release grippers
 /*

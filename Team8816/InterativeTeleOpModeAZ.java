@@ -50,7 +50,11 @@ import com.qualcomm.robotcore.util.Range;
  * Remove or comment out the @Disabled line to add this opmode to the Driver Station OpMode list
  */
 
+//TODO: consider using 2 buttons: one to grab glyphs and one to grab the relics (which are smaller on top).
+
+
 @TeleOp(name = "Interative TeleOp Mode AZ", group = "Iterative OpModes")
+
 public class InterativeTeleOpModeAZ extends OpMode {
     // Declare global OpMode members.
     private ElapsedTime runtime = new ElapsedTime();
@@ -101,13 +105,18 @@ public class InterativeTeleOpModeAZ extends OpMode {
     @Override
     public void start() {
 
+
+        // IF YOU ARE NOT USING THE AUTO MODE
+
+        /*
+
         runtime.reset();
 
         ElapsedTime time = new ElapsedTime();
 
         time.reset();
 
-        while (time.time() < 0.6) {
+        while (time.time() < 1) {
 
             armMotor.setPower(0.5);
 
@@ -127,7 +136,9 @@ public class InterativeTeleOpModeAZ extends OpMode {
             armMotor.setPower(-0.5);
 
         }
+
         */
+
 
     }
 
@@ -143,8 +154,10 @@ public class InterativeTeleOpModeAZ extends OpMode {
         // Sets the power level for each driving motors
         double leftPower;
         double rightPower;
+
         // sets the power level for lifting the grippers
         double armPower;
+
         // power level for the sliders
         double extendingArmPower;
 
@@ -174,12 +187,15 @@ public class InterativeTeleOpModeAZ extends OpMode {
         // gently raise or lower the arm (restricted to -0.5 lower | 0.5 raise)
         // get power value from gamepad2 (person 2) y position for extending arm
 
-        //TODO: consider using 2 buttons: one to grab glyphs and one to grab the relics (which are smaller on top).
+        double armValue = -gamepad2.right_stick_y; // ensure the motor goes in the correct direction (full power possible)
+        armPower = armValue;
 
+        /*
         if (leftGrab.getPosition() > 0.5 && rightGrab.getPosition() < 0.5) {
-            double armValue = -gamepad2.right_stick_y; // ensure the motor goes in the correct direction
-            armPower = Range.clip(armValue, -0.5, 0.5); // restrains the value of lifting the grippers (motors' powers limited to 50%)
+            //armPower = Range.clip(armValue, -0.5, 0.5); // restrains the value of lifting the grippers (motors' powers limited to 50%)
+            armPower = armValue;
         }
+        */
 
         // move the slider (extendingArm) using left (backward) and right triggers (forward)
 
@@ -218,12 +234,12 @@ public class InterativeTeleOpModeAZ extends OpMode {
         // forward position or grabbed block
         if (gamepad2.y) {
             leftGrab.setPosition(1);
-            rightGrab.setPosition(-1);
+            rightGrab.setPosition(0);
             telemetry.addData("pressed", "Y");
 
             // side position
         } else if (gamepad2.b) {
-            leftGrab.setPosition(-0.5);
+            leftGrab.setPosition(0.5);
             rightGrab.setPosition(0.5);// set position to 45 degrees
             telemetry.addData("pressed", "B");
 
@@ -235,7 +251,7 @@ public class InterativeTeleOpModeAZ extends OpMode {
 
             // stowed position
         } else if (gamepad2.x) {
-            leftGrab.setPosition(-1);
+            leftGrab.setPosition(0);
             rightGrab.setPosition(1);
             telemetry.addData("pressed", "X");
         }
@@ -266,8 +282,6 @@ public class InterativeTeleOpModeAZ extends OpMode {
         rightDrive.setPower(0);
         armMotor.setPower(0);
         extendingArm.setPower(0);
-        leftGrab.setPosition(0);
-        rightGrab.setPosition(0);
 
         telemetry.addData("Status", "Terminated Interative TeleOp Mode");
         telemetry.update();

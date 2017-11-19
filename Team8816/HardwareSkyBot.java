@@ -77,11 +77,8 @@ public class HardwareSkyBot {
     public final static double LEFTBLOCK_READY = 0.9;
     public final static double RIGHTBLOCK_READY = 0.1;
 
-    //  public final static double LEFTRELICS_GRAB = 1;
-    //  public final static double RIGHTRELICS_GRAB = 0;
-
-    public final static double LEFTBLOCK_GRAB = 1;
-    public final static double RIGHTBLOCK_GRAB = 0;
+    // public final static double LEFTRELICS_GRAB = 1;
+//    public final static double RIGHTRELICS_GRAB = 0;
 
 
     /* Local OpMode members. */
