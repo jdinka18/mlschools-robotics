@@ -218,12 +218,12 @@ public class InterativeTeleOpModeAZ extends OpMode {
         // forward position or grabbed block
         if (gamepad2.y) {
             leftGrab.setPosition(1);
-            rightGrab.setPosition(0);
+            rightGrab.setPosition(-1);
             telemetry.addData("pressed", "Y");
 
             // side position
         } else if (gamepad2.b) {
-            leftGrab.setPosition(0.5);
+            leftGrab.setPosition(-0.5);
             rightGrab.setPosition(0.5);// set position to 45 degrees
             telemetry.addData("pressed", "B");
 
@@ -235,7 +235,7 @@ public class InterativeTeleOpModeAZ extends OpMode {
 
             // stowed position
         } else if (gamepad2.x) {
-            leftGrab.setPosition(0);
+            leftGrab.setPosition(-1);
             rightGrab.setPosition(1);
             telemetry.addData("pressed", "X");
         }
