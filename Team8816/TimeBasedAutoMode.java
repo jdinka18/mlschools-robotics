@@ -36,13 +36,13 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.robotcontroller.external.samples.HardwarePushbot;
 
-@Autonomous(name="Simple Auto Mode", group="Auto Modes")
+@Autonomous(name = "Simple Auto Mode", group = "Auto Modes")
 // @Disabled
 public class TimeBasedAutoMode extends LinearOpMode {
 
     /* Declare OpMode members. */
-    HardwareSkyBot         robot   = new HardwareSkyBot();   // Use a Pushbot's hardware
-    private ElapsedTime     runtime = new ElapsedTime();
+    HardwareSkyBot robot = new HardwareSkyBot();   // Use a Pushbot's hardware
+    private ElapsedTime runtime = new ElapsedTime();
 
 
     // power variables for motors (from SkyBot Class)
@@ -91,12 +91,19 @@ public class TimeBasedAutoMode extends LinearOpMode {
         robot.rightDrive.setPower(POWER_STOP);
         sleep(1000);
 
-        // Step 3 release grippers?
+        // Step 4 - lift the grippers
 
+        robot.armMotor.setPower(POWER_HALF);
+        sleep(500);
+
+        // Step 5? - Release grippers
+/*
         robot.leftGrab.setPosition(LEFTBLOCK_READY);
         robot.rightGrab.setPosition(RIGHTBLOCK_READY);
         sleep(1500);
+*/
 
+        // Last Step
         telemetry.addData("Path", "Complete");
         telemetry.update();
         sleep(1000);

@@ -140,7 +140,7 @@ public class InterativeTeleOpMode extends OpMode {
 
         telemetry.addData("Status", "Interative TeleOp Mode Running");
 
-        // Setup a variable for each drive wheel to save power level for telemetry
+        // Sets the power level for each driving motors
         double leftPower;
         double rightPower;
         // sets the power level for lifting the grippers
@@ -169,7 +169,7 @@ public class InterativeTeleOpMode extends OpMode {
 
         // get power value from gamepad1 (person 1) y position for driving
         leftPower = -gamepad1.left_stick_y;
-        rightPower = -gamepad1.right_stick_y;
+        rightPower = gamepad1.right_stick_y;
 
         // gently raise or lower the arm (restricted to -0.5 lower | 0.5 raise)
         // get power value from gamepad2 (person 2) y position for extending arm
@@ -177,8 +177,8 @@ public class InterativeTeleOpMode extends OpMode {
         //TODO: consider using 2 buttons: one to grab glyphs and one to grab the relics (which are smaller on top).
 
         if (leftGrab.getPosition() > 0.5 && rightGrab.getPosition() < 0.5) {
-            double armValue = gamepad2.right_stick_y;
-            armPower = Range.clip(armValue, -0.5, 0.5);
+            double armValue = -gamepad2.right_stick_y; // ensure the motor goes in the correct direction
+            armPower = Range.clip(armValue, -0.5, 0.5); // restrains the value of lifting the grippers (motors' powers limited to 50%)
         }
 
         // move the slider (extendingArm) using left (backward) and right triggers (forward)

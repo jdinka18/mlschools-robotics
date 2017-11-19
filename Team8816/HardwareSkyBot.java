@@ -36,24 +36,23 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 
 /**
  * This is NOT an opmode.
- *
+ * <p>
  * This class can be used to define all the specific hardware for a single robot.
  * In this case that robot is a SkyBot robot.
- *
+ * <p>
  * This hardware class assumes the following device names have been configured on the robot:
  * Note:  All names are lower case and some have single spaces between words.
- *
+ * <p>
  * Motor channel:  Left  drive motor:        "left_drive"
  * Motor channel:  Right drive motor:        "right_drive"
  * Servo channel:  Servo to raise/lower arm: "arm"
  * Servo channel:  Servo to open/close claw: "claw"
- *
+ * <p>
  * Note: the configuration of the servos is such that:
- *   As the arm servo approaches 0, the arm position moves up (away from the floor).
- *   As the claw servo approaches 0, the claw opens up (drops the game element).
+ * As the arm servo approaches 0, the arm position moves up (away from the floor).
+ * As the claw servo approaches 0, the claw opens up (drops the game element).
  */
-public class HardwareSkyBot
-{
+public class HardwareSkyBot {
     /* Public OpMode members. */
     public DcMotor leftDrive = null;
     public DcMotor rightDrive = null;
@@ -78,22 +77,19 @@ public class HardwareSkyBot
     public final static double LEFTBLOCK_READY = 0.9;
     public final static double RIGHTBLOCK_READY = 0.1;
 
-  //  public final static double LEFTRELICS_GRAB = 1;
-  //  public final static double RIGHTRELICS_GRAB = 0;
+    //  public final static double LEFTRELICS_GRAB = 1;
+    //  public final static double RIGHTRELICS_GRAB = 0;
 
     public final static double LEFTBLOCK_GRAB = 1;
     public final static double RIGHTBLOCK_GRAB = 0;
 
 
-
-
     /* Local OpMode members. */
-    HardwareMap hwMap  = null;
-    private ElapsedTime period  = new ElapsedTime();
+    HardwareMap hwMap = null;
+    private ElapsedTime period = new ElapsedTime();
 
     /* Constructor */
     public HardwareSkyBot() {
-
 
 
     }
