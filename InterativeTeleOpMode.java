@@ -50,7 +50,7 @@ import com.qualcomm.robotcore.util.Range;
  * Remove or comment out the @Disabled line to add this opmode to the Driver Station OpMode list
  */
 
-@TeleOp(name = "Interative TeleOp Mode", group = "Iterative Opmode")
+@TeleOp(name = "Interative TeleOp Mode", group = "Iterative OpModes")
 public class InterativeTeleOpMode extends OpMode {
     // Declare global OpMode members.
     private ElapsedTime runtime = new ElapsedTime();
