@@ -1,3 +1,4 @@
-## Team 10788
+## Team 10788 Change Log 
 
-Hello world :)
+2017.MM.DD.001
+==================
