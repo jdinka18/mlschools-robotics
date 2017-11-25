@@ -91,7 +91,7 @@ public class TimeBasedAutoMode extends LinearOpMode {
         // Move robot forward with half speed
         robot.leftDrive.setPower(POWER_HALF);
         robot.rightDrive.setPower(POWER_HALF);
-        sleep(400);
+        sleep(450);
 
         // Park robot by stopping the motors
 
