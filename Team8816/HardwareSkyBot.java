@@ -57,7 +57,7 @@ public class HardwareSkyBot {
     public DcMotor leftDrive = null;
     public DcMotor rightDrive = null;
     public DcMotor armMotor = null;
-    public DcMotor extendingArm = null;
+   // public DcMotor extendingArm = null;
     public Servo leftGrab = null;
     public Servo rightGrab = null;
 
@@ -100,7 +100,7 @@ public class HardwareSkyBot {
         leftDrive = hwMap.dcMotor.get("leftDrive");
         rightDrive = hwMap.dcMotor.get("rightDrive");
         armMotor = hwMap.dcMotor.get("armMotor");
-        extendingArm = hwMap.dcMotor.get("extendingArm");
+     //   extendingArm = hwMap.dcMotor.get("extendingArm");
         leftGrab = hwMap.servo.get("leftGrab");
         rightGrab = hwMap.servo.get("rightGrab");
 
@@ -111,7 +111,7 @@ public class HardwareSkyBot {
         leftDrive.setPower(POWER_STOP);
         rightDrive.setPower(POWER_STOP);
         armMotor.setPower(POWER_STOP);
-        extendingArm.setPower(POWER_STOP);
+      //  extendingArm.setPower(POWER_STOP);
 
         //
 
@@ -120,7 +120,7 @@ public class HardwareSkyBot {
         leftDrive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         rightDrive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         armMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        extendingArm.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+      //  extendingArm.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
 
     }

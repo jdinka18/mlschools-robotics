@@ -61,7 +61,7 @@ public class InterativeTeleOpModeAZ extends OpMode {
     private DcMotor leftDrive = null;
     private DcMotor rightDrive = null;
     private DcMotor armMotor = null;
-    private DcMotor extendingArm = null;
+    //private DcMotor extendingArm = null;
     private Servo leftGrab = null;
     private Servo rightGrab = null;
 
@@ -79,7 +79,7 @@ public class InterativeTeleOpModeAZ extends OpMode {
         leftDrive = hardwareMap.get(DcMotor.class, "leftDrive");
         rightDrive = hardwareMap.get(DcMotor.class, "rightDrive");
         armMotor = hardwareMap.get(DcMotor.class, "armMotor");
-        extendingArm = hardwareMap.get(DcMotor.class, "extendingArm");
+   //     extendingArm = hardwareMap.get(DcMotor.class, "extendingArm");
         leftGrab = hardwareMap.get(Servo.class, "leftGrab");
         rightGrab = hardwareMap.get(Servo.class, "rightGrab");
 
@@ -159,7 +159,7 @@ public class InterativeTeleOpModeAZ extends OpMode {
         double armPower;
 
         // power level for the sliders
-        double extendingArmPower;
+       // double extendingArmPower;
 
         // Choose to drive using either Tank Mode, or POV Mode
         // Comment out the method that's not used.  The default below is POV.
@@ -174,21 +174,19 @@ public class InterativeTeleOpModeAZ extends OpMode {
         rightPower   = Range.clip(drive - turn, -1.0, 1.0) ;
         */
 
-        // initialize values
-        armPower = 0;
-
-        extendingArmPower = 0;
-
 
         // get power value from gamepad1 (person 1) y position for driving
         leftPower = -gamepad1.left_stick_y;
         rightPower = gamepad1.right_stick_y;
 
+        leftPower = Range.clip(leftPower,-0.6,0.6);
+        rightPower = Range.clip(rightPower,-0.6,0.6);
+
         // gently raise or lower the arm (restricted to -0.5 lower | 0.5 raise)
         // get power value from gamepad2 (person 2) y position for extending arm
 
-        double armValue = -gamepad2.right_stick_y; // ensure the motor goes in the correct direction (full power possible)
-        armPower = armValue;
+        armPower = -gamepad2.right_stick_y; // ensure the motor goes in the correct direction (full power possible)
+        armPower = Range.clip(armPower,-0.5,0.5);
 
         /*
         if (leftGrab.getPosition() > 0.5 && rightGrab.getPosition() < 0.5) {
@@ -198,14 +196,14 @@ public class InterativeTeleOpModeAZ extends OpMode {
         */
 
         // move the slider (extendingArm) using left (backward) and right triggers (forward)
-
+    /*
         if (gamepad2.right_trigger > 0)
             extendingArmPower = gamepad2.right_trigger;
         else if (gamepad2.left_trigger > 0)
             extendingArmPower = -gamepad2.left_trigger;
         else
             extendingArmPower = 0;
-
+*/
 
         // gently raise or lower the arm (-0.5 lower | 0.5 raise)
 
@@ -260,13 +258,13 @@ public class InterativeTeleOpModeAZ extends OpMode {
         leftDrive.setPower(leftPower);
         rightDrive.setPower(rightPower);
         armMotor.setPower(armPower);
-        extendingArm.setPower(extendingArmPower);
+   //     extendingArm.setPower(extendingArmPower);
 
         // Show the elapsed game time and current status of robot's hardware.
         telemetry.addData("Status", "Run Time: " + runtime.toString());
         telemetry.addData("Motors", "left (%.2f), right (%.2f)", leftDrive.getPower(), rightDrive.getPower());
         telemetry.addData("Arm Motor", "(%.2f)", armMotor.getPower());
-        telemetry.addData("Sliding Motor", "(%.2f)", extendingArm.getPower());
+      //  telemetry.addData("Sliding Motor", "(%.2f)", extendingArm.getPower());
         telemetry.addData("Left Grab Servo Position", leftGrab.getPosition());
         telemetry.addData("Right Grab Servo Position", rightGrab.getPosition());
         telemetry.update();
@@ -281,7 +279,7 @@ public class InterativeTeleOpModeAZ extends OpMode {
         leftDrive.setPower(0);
         rightDrive.setPower(0);
         armMotor.setPower(0);
-        extendingArm.setPower(0);
+     //   extendingArm.setPower(0);
 
         telemetry.addData("Status", "Terminated Interative TeleOp Mode");
         telemetry.update();

@@ -77,7 +77,10 @@ public class TimeBasedAutoMode extends LinearOpMode {
 
         // Raise Arm with 50% power
         robot.armMotor.setPower(POWER_HALF);
-        sleep(500);
+        sleep(800);
+
+        robot.armMotor.setPower(POWER_STOP);
+        sleep(200);
 
 
         // Get the grippers ready to grab the block
@@ -85,26 +88,10 @@ public class TimeBasedAutoMode extends LinearOpMode {
         robot.rightGrab.setPosition(RIGHTBLOCK_READY);
         sleep(1000);
 
-
-        // lower the arm
-        robot.armMotor.setPower(-POWER_HALF);
-        sleep(500);
-
-        // Grab the block
-        robot.leftGrab.setPosition(LEFTBLOCK_GRAB);
-        robot.rightGrab.setPosition(RIGHTBLOCK_GRAB);
-
-        // Move robot forward with full speed
-        robot.leftDrive.setPower(POWER_FULL);
-        robot.rightDrive.setPower(POWER_FULL);
-        sleep(1000);
-
-        /* Step 2 - let turn the robot! ???
-
+        // Move robot forward with half speed
         robot.leftDrive.setPower(POWER_HALF);
-        robot.rightDrive.setPower(-POWER_HALF);
-        sleep(600);
-        */
+        robot.rightDrive.setPower(POWER_HALF);
+        sleep(400);
 
         // Park robot by stopping the motors
 
