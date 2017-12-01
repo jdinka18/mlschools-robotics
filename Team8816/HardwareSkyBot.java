@@ -31,6 +31,7 @@ package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
+import com.qualcomm.robotcore.hardware.NormalizedColorSensor;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
@@ -60,6 +61,12 @@ public class HardwareSkyBot {
    // public DcMotor extendingArm = null;
     public Servo leftGrab = null;
     public Servo rightGrab = null;
+    public Servo colorArm = null;
+
+    // color sensor
+    public NormalizedColorSensor colorSensor = null;
+
+
 
     // various possible power values applied to the motors
 
@@ -103,6 +110,10 @@ public class HardwareSkyBot {
      //   extendingArm = hwMap.dcMotor.get("extendingArm");
         leftGrab = hwMap.servo.get("leftGrab");
         rightGrab = hwMap.servo.get("rightGrab");
+        colorArm = hwMap.servo.get("colorArm");
+
+        colorSensor = hwMap.get(NormalizedColorSensor.class, "sensorColor");
+
 
         // This will allow motors to rotate in same direction
         leftDrive.setDirection(DcMotor.Direction.REVERSE);
