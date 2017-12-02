@@ -30,11 +30,7 @@
 package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-import com.qualcomm.robotcore.util.ElapsedTime;
-
-import org.firstinspires.ftc.robotcontroller.external.samples.HardwarePushbot;
 
 @Autonomous(name = "Simple Auto Mode", group = "Auto Modes")
 // @Disabled
@@ -42,22 +38,6 @@ public class TimeBasedAutoMode extends LinearOpMode {
 
     /* Declare OpMode members. */
     HardwareSkyBot robot = new HardwareSkyBot();   // Use a SkyBot's hardware
-    //private ElapsedTime runtime = new ElapsedTime();
-
-
-    // power variables for motors (from SkyBot Class)
-    public static final double POWER_FULL = 1.0;
-    public static final double POWER_HALF = 0.5;
-    public static final double POWER_STOP = 0.0;
-    public static final double POWER_LIFT = 0.6;
-
-
-    // servo positions (from SkyBot Class)
-    public final static double LEFTBLOCK_READY = 0.9;
-    public final static double RIGHTBLOCK_READY = 0.1;
-
-    public final static double LEFTBLOCK_GRAB = 1;
-    public final static double RIGHTBLOCK_GRAB = 0;
 
     @Override
     public void runOpMode() {
@@ -76,41 +56,26 @@ public class TimeBasedAutoMode extends LinearOpMode {
         waitForStart();
 
         // Raise Arm with 50% power
-        robot.armMotor.setPower(POWER_HALF);
+        robot.armMotor.setPower(robot.POWER_HALF);
         sleep(800);
 
-        robot.armMotor.setPower(POWER_STOP);
+        robot.armMotor.setPower(robot.POWER_STOP);
         sleep(200);
 
-
         // Get the grippers ready to grab the block
-        robot.leftGrab.setPosition(LEFTBLOCK_READY);
-        robot.rightGrab.setPosition(RIGHTBLOCK_READY);
+        robot.leftGrab.setPosition(robot.LEFTBLOCK_READY);
+        robot.rightGrab.setPosition(robot.RIGHTBLOCK_READY);
         sleep(1000);
 
         // Move robot forward with half speed
-        robot.leftDrive.setPower(POWER_HALF);
-        robot.rightDrive.setPower(POWER_HALF);
+        robot.leftDrive.setPower(robot.POWER_HALF);
+        robot.rightDrive.setPower(robot.POWER_HALF);
         sleep(450);
 
         // Park robot by stopping the motors
-
-        robot.leftDrive.setPower(POWER_STOP);
-        robot.rightDrive.setPower(POWER_STOP);
+        robot.leftDrive.setPower(robot.POWER_STOP);
+        robot.rightDrive.setPower(robot.POWER_STOP);
         sleep(1000);
-
-        /*Lift the grippers
-
-        robot.armMotor.setPower(POWER_HALF);
-        sleep(500);
-        */
-
-        // Step 5? - Release grippers
-/*
-        robot.leftGrab.setPosition(LEFTBLOCK_READY);
-        robot.rightGrab.setPosition(RIGHTBLOCK_READY);
-        sleep(1500);
-*/
 
         // Last Step
         telemetry.addData("Path", "Complete");
@@ -118,42 +83,3 @@ public class TimeBasedAutoMode extends LinearOpMode {
         sleep(1000);
     }
 }
-
-// author's note - Below code is alternate solution, but is a little more messy
-        /*
-        // Step through each leg of the path, ensuring that the Auto mode has not been stopped along the way
-
-        // Step 1:  Drive forward for 3 seconds
-        robot.leftDrive.setPower(FORWARD_SPEED);
-        robot.rightDrive.setPower(FORWARD_SPEED);
-        runtime.reset();
-        while (opModeIsActive() && (runtime.seconds() < 3.0)) {
-            telemetry.addData("Path", "Leg 1: %2.5f S Elapsed", runtime.seconds());
-            telemetry.update();
-        }
-
-        // Step 2:  Spin right for 1.3 seconds
-        robot.leftDrive.setPower(TURN_SPEED);
-        robot.rightDrive.setPower(-TURN_SPEED);
-        runtime.reset();
-        while (opModeIsActive() && (runtime.seconds() < 1.3)) {
-            telemetry.addData("Path", "Leg 2: %2.5f S Elapsed", runtime.seconds());
-            telemetry.update();
-        }
-
-        // Step 3:  Drive Backwards for 1 Second
-        robot.leftDrive.setPower(-FORWARD_SPEED);
-        robot.rightDrive.setPower(-FORWARD_SPEED);
-        runtime.reset();
-        while (opModeIsActive() && (runtime.seconds() < 1.0)) {
-            telemetry.addData("Path", "Leg 3: %2.5f S Elapsed", runtime.seconds());
-            telemetry.update();
-        }
-
-        // Step 4:  Stop and close the claw.
-        robot.leftDrive.setPower(0);
-        robot.rightDrive.setPower(0);
-        robot.leftClaw.setPosition(1.0);
-        robot.rightClaw.setPosition(0.0);
-
-        */

@@ -59,6 +59,19 @@ public class ColorSensor_Auto extends LinearOpMode {
     public final static double LEFTBLOCK_GRAB = 1;
     public final static double RIGHTBLOCK_GRAB = 0;
 
+    // color sensor math
+
+    // hsvValues is an array that will hold the hue, saturation, and value information.
+    float hsvValues[] = {0F, 0F, 0F};
+
+    // values is a reference to the hsvValues array.
+    final float values[] = hsvValues;
+
+    // sometimes it helps to multiply the raw RGB values with a scale factor
+    // to amplify/attentuate the measured values.
+    final double SCALE_FACTOR = 255;
+
+
     @Override
     public void runOpMode() {
         /*
@@ -76,8 +89,8 @@ public class ColorSensor_Auto extends LinearOpMode {
         telemetry.addData("Status", "Ready to run");    //
         telemetry.update();
 
-        if (robot.colorSensor instanceof SwitchableLight) {
-            ((SwitchableLight)robot.colorSensor).enableLight(true);
+        if (robot.colorSensorNormalized instanceof SwitchableLight) {
+            ((SwitchableLight) robot.colorSensorNormalized).enableLight(true);
         }
 
         // Wait for the game to start (driver presses PLAY)
@@ -86,41 +99,49 @@ public class ColorSensor_Auto extends LinearOpMode {
         robot.colorArm.setPosition(0.1);
         sleep(1000);
 
-        robot.leftDrive.setPower(0.3);
-        robot.rightDrive.setPower(0.3);
+     /* robot.leftDrive.setPower(0.1);
+        robot.rightDrive.setPower(0.1);
         sleep(200);
 
         robot.leftDrive.setPower(0.0);
         robot.rightDrive.setPower(0.0);
-        sleep(200);
-
+       sleep(200);
+    */
         // Color Math
-        NormalizedRGBA colors = robot.colorSensor.getNormalizedColors();
+        NormalizedRGBA colors = robot.colorSensorNormalized.getNormalizedColors();
         Color.colorToHSV(colors.toColor(), hsvValues);
         int color = colors.toColor();
         float max = Math.max(Math.max(Math.max(colors.red, colors.green), colors.blue), colors.alpha);
-        colors.red   /= max;
+        colors.red /= max;
         colors.green /= max;
-        colors.blue  /= max;
+        colors.blue /= max;
         color = colors.toColor();
 
         // Detect color, move as correctly
-        if(Color.red(color)>0x90) {
+
+        // if red on right side
+        if (Color.red(color) > 0x90) {
             telemetry.addLine("Red");
-            robot.leftDrive.setPower(0.2);
-            sleep(200);
-            robot.leftDrive.setPower(0.0);
+
+            robot.turnRight(0.2);
+            sleep(100);
+            robot.stopMotors();
             sleep(100);
 
         }
-        else if(Color.blue(color)>0x50) {
+
+        // if blue on left side
+        else if (Color.blue(color) > 0x50) {
             telemetry.addLine("Blue");
-            robot.rightDrive.setPower(0.2);
-            sleep(200);
-            robot.rightDrive.setPower(0.0);
+
+            robot.turnLeft(0.2);
+            sleep(100);
+            robot.stopMotors();
             sleep(100);
 
         }
+
+        // cannot see the ball's color - do nothing
         else {
             telemetry.addLine("Nothing");
 
@@ -129,12 +150,15 @@ public class ColorSensor_Auto extends LinearOpMode {
         robot.colorArm.setPosition(0.5);
         sleep(1000);
 
+        robot.stopMotors();
+        sleep(1000);
+
         // Last Step
         telemetry.addData("Path", "Complete");
         telemetry.update();
         sleep(1000);
 
-        while(opModeIsActive()) {
+        while (opModeIsActive()) {
 
             // DISPLAY COLOR on phone for entire OpMode
 
@@ -158,9 +182,9 @@ public class ColorSensor_Auto extends LinearOpMode {
                     .addData("g", "%02x", Color.green(color))
                     .addData("b", "%02x", Color.blue(color));
 
-            colors.red   /= max;
+            colors.red /= max;
             colors.green /= max;
-            colors.blue  /= max;
+            colors.blue /= max;
             color = colors.toColor();
 
             telemetry.addLine("normalized color:  ")
@@ -169,33 +193,11 @@ public class ColorSensor_Auto extends LinearOpMode {
                     .addData("g", "%02x", Color.green(color))
                     .addData("b", "%02x", Color.blue(color));
 
-            if(Color.red(color)>0x90) {
-                telemetry.addLine("Red");
-                robot.leftDrive.setPower(0.2);
-                sleep(200);
-                robot.leftDrive.setPower(0.0);
-                sleep(100);
-
-            }
-            else if(Color.blue(color)>0x50) {
-                telemetry.addLine("Blue");
-                robot.rightDrive.setPower(0.2);
-                sleep(200);
-                robot.rightDrive.setPower(0.0);
-                sleep(100);
-
-            }
-            else {
-                telemetry.addLine("Nothing");
-            }
-
-            telemetry.update();
-
-        }
-
         }
 
     }
+
+}
 
 // author's note - Below code is alternate solution, but is a little more messy
         /*

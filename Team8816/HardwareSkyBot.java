@@ -29,11 +29,15 @@
 
 package org.firstinspires.ftc.teamcode;
 
+import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DistanceSensor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.NormalizedColorSensor;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
+
+import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 
 /**
  * This is NOT an opmode.
@@ -58,14 +62,19 @@ public class HardwareSkyBot {
     public DcMotor leftDrive = null;
     public DcMotor rightDrive = null;
     public DcMotor armMotor = null;
-   // public DcMotor extendingArm = null;
+    // public DcMotor extendingArm = null;
     public Servo leftGrab = null;
     public Servo rightGrab = null;
     public Servo colorArm = null;
 
     // color sensor
-    public NormalizedColorSensor colorSensor = null;
+    public ColorSensor colorSensor = null;
 
+    // color sensor
+    public NormalizedColorSensor colorSensorNormalized = null;
+
+    // distance sensor
+    public DistanceSensor sensorDistance = null;
 
 
     // various possible power values applied to the motors
@@ -87,6 +96,8 @@ public class HardwareSkyBot {
     // public final static double LEFTRELICS_GRAB = 1;
 //    public final static double RIGHTRELICS_GRAB = 0;
 
+    public double distance = sensorDistance.getDistance(DistanceUnit.CM);
+
 
     /* Local OpMode members. */
     HardwareMap hwMap = null;
@@ -107,13 +118,15 @@ public class HardwareSkyBot {
         leftDrive = hwMap.dcMotor.get("leftDrive");
         rightDrive = hwMap.dcMotor.get("rightDrive");
         armMotor = hwMap.dcMotor.get("armMotor");
-     //   extendingArm = hwMap.dcMotor.get("extendingArm");
+        //   extendingArm = hwMap.dcMotor.get("extendingArm");
         leftGrab = hwMap.servo.get("leftGrab");
         rightGrab = hwMap.servo.get("rightGrab");
         colorArm = hwMap.servo.get("colorArm");
 
-        colorSensor = hwMap.get(NormalizedColorSensor.class, "sensorColor");
+        colorSensor = hwMap.get(ColorSensor.class, "sensorColor");
+        sensorDistance = hwMap.get(DistanceSensor.class, "sensorColor");
 
+        colorSensorNormalized = hwMap.get(NormalizedColorSensor.class, "sensorColor");
 
         // This will allow motors to rotate in same direction
         leftDrive.setDirection(DcMotor.Direction.REVERSE);
@@ -122,7 +135,7 @@ public class HardwareSkyBot {
         leftDrive.setPower(POWER_STOP);
         rightDrive.setPower(POWER_STOP);
         armMotor.setPower(POWER_STOP);
-      //  extendingArm.setPower(POWER_STOP);
+        //  extendingArm.setPower(POWER_STOP);
 
         //
 
@@ -131,8 +144,36 @@ public class HardwareSkyBot {
         leftDrive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         rightDrive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         armMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-      //  extendingArm.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        //  extendingArm.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
 
     }
+
+    public void turnRight(double power) {
+
+        leftDrive.setPower(power);
+        rightDrive.setPower(-power);
+
+    }
+
+    public void turnLeft(double power) {
+
+        leftDrive.setPower(-power);
+        rightDrive.setPower(power);
+
+    }
+
+    public void driveStraight(double power) {
+
+        leftDrive.setPower(power);
+        rightDrive.setPower(power);
+
+    }
+
+    public void stopMotors() {
+
+        leftDrive.setPower(POWER_STOP);
+        rightDrive.setPower(POWER_STOP);
+    }
+
 }
