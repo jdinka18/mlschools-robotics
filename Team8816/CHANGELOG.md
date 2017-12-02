@@ -1,3 +1,17 @@
+2017.12.03.001
+==================
+Changes to the code are expected on meet day
+
+2017.12.02.002
+==================
+Stay Tuned
+
+2017.12.02.001
+==================
+Minor updates to code
+- Implemented the Simple Color Sensor Autonomous -> the robot can knock off the correct jewel
+TODO: Implement a class for each color (RED, BLUE)
+
 2017.12.01.001
 ==================
 Major updates to code
