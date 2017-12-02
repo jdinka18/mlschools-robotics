@@ -96,17 +96,13 @@ public class ColorSensor_Auto extends LinearOpMode {
         // Wait for the game to start (driver presses PLAY)
         waitForStart();
 
-        robot.colorArm.setPosition(0.1);
-        sleep(1000);
+        robot.colorArm.setPosition(1.0);
+        sleep(1500);
 
-     /* robot.leftDrive.setPower(0.1);
-        robot.rightDrive.setPower(0.1);
-        sleep(200);
+        telemetry.addData("Servo", "Moved");
+        telemetry.update();
 
-        robot.leftDrive.setPower(0.0);
-        robot.rightDrive.setPower(0.0);
-       sleep(200);
-    */
+
         // Color Math
         NormalizedRGBA colors = robot.colorSensorNormalized.getNormalizedColors();
         Color.colorToHSV(colors.toColor(), hsvValues);
@@ -123,10 +119,10 @@ public class ColorSensor_Auto extends LinearOpMode {
         if (Color.red(color) > 0x90) {
             telemetry.addLine("Red");
 
-            robot.turnRight(0.2);
-            sleep(100);
+            robot.turnRight(0.5);
+            sleep(800);
             robot.stopMotors();
-            sleep(100);
+            sleep(500);
 
         }
 
@@ -134,20 +130,22 @@ public class ColorSensor_Auto extends LinearOpMode {
         else if (Color.blue(color) > 0x50) {
             telemetry.addLine("Blue");
 
-            robot.turnLeft(0.2);
-            sleep(100);
+            robot.turnLeft(0.5);
+            sleep(800);
             robot.stopMotors();
-            sleep(100);
+            sleep(500);
 
         }
 
         // cannot see the ball's color - do nothing
         else {
             telemetry.addLine("Nothing");
-
+            sleep(600);
         }
 
-        robot.colorArm.setPosition(0.5);
+        telemetry.update();
+
+        robot.colorArm.setPosition(0.25);
         sleep(1000);
 
         robot.stopMotors();
@@ -158,82 +156,6 @@ public class ColorSensor_Auto extends LinearOpMode {
         telemetry.update();
         sleep(1000);
 
-        while (opModeIsActive()) {
-
-            // DISPLAY COLOR on phone for entire OpMode
-
-            Color.colorToHSV(colors.toColor(), hsvValues);
-            telemetry.addLine()
-                    .addData("H", "%.3f", hsvValues[0])
-                    .addData("S", "%.3f", hsvValues[1])
-                    .addData("V", "%.3f", hsvValues[2]);
-            telemetry.addLine()
-                    .addData("a", "%.3f", colors.alpha)
-                    .addData("r", "%.3f", colors.red)
-                    .addData("g", "%.3f", colors.green)
-                    .addData("b", "%.3f", colors.blue);
-
-            /** We also display a conversion of the colors to an equivalent Android color integer.
-             * @see Color */
-
-            telemetry.addLine("raw Android color: ")
-                    .addData("a", "%02x", Color.alpha(color))
-                    .addData("r", "%02x", Color.red(color))
-                    .addData("g", "%02x", Color.green(color))
-                    .addData("b", "%02x", Color.blue(color));
-
-            colors.red /= max;
-            colors.green /= max;
-            colors.blue /= max;
-            color = colors.toColor();
-
-            telemetry.addLine("normalized color:  ")
-                    .addData("a", "%02x", Color.alpha(color))
-                    .addData("r", "%02x", Color.red(color))
-                    .addData("g", "%02x", Color.green(color))
-                    .addData("b", "%02x", Color.blue(color));
-
-        }
-
     }
 
 }
-
-// author's note - Below code is alternate solution, but is a little more messy
-        /*
-        // Step through each leg of the path, ensuring that the Auto mode has not been stopped along the way
-
-        // Step 1:  Drive forward for 3 seconds
-        robot.leftDrive.setPower(FORWARD_SPEED);
-        robot.rightDrive.setPower(FORWARD_SPEED);
-        runtime.reset();
-        while (opModeIsActive() && (runtime.seconds() < 3.0)) {
-            telemetry.addData("Path", "Leg 1: %2.5f S Elapsed", runtime.seconds());
-            telemetry.update();
-        }
-
-        // Step 2:  Spin right for 1.3 seconds
-        robot.leftDrive.setPower(TURN_SPEED);
-        robot.rightDrive.setPower(-TURN_SPEED);
-        runtime.reset();
-        while (opModeIsActive() && (runtime.seconds() < 1.3)) {
-            telemetry.addData("Path", "Leg 2: %2.5f S Elapsed", runtime.seconds());
-            telemetry.update();
-        }
-
-        // Step 3:  Drive Backwards for 1 Second
-        robot.leftDrive.setPower(-FORWARD_SPEED);
-        robot.rightDrive.setPower(-FORWARD_SPEED);
-        runtime.reset();
-        while (opModeIsActive() && (runtime.seconds() < 1.0)) {
-            telemetry.addData("Path", "Leg 3: %2.5f S Elapsed", runtime.seconds());
-            telemetry.update();
-        }
-
-        // Step 4:  Stop and close the claw.
-        robot.leftDrive.setPower(0);
-        robot.rightDrive.setPower(0);
-        robot.leftClaw.setPosition(1.0);
-        robot.rightClaw.setPosition(0.0);
-
-        */

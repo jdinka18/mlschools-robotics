@@ -6,10 +6,7 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.SwitchableLight;
 
-import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
-
 import java.util.Locale;
-
 
 /**
  * Created by SmartZalmover on 12/1/17.
@@ -61,8 +58,8 @@ public class ColorSensor_Distance_Auto extends LinearOpMode {
                     hsvValues);
 
             // send the info back to driver station using telemetry function.
-            telemetry.addData("Distance (cm)",
-                    String.format(Locale.US, "%.02f", robot.distance));
+            //telemetry.addData("Distance (cm)",
+            //        String.format(Locale.US, "%.02f", robot.distance));
             // original: sensorDistance.getDistance(DistanceUnit.CM) ^
             telemetry.addData("Alpha", robot.colorSensor.alpha());
             telemetry.addData("Red  ", robot.colorSensor.red());

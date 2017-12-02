@@ -70,11 +70,9 @@ public class HardwareSkyBot {
     // color sensor
     public ColorSensor colorSensor = null;
 
-    // color sensor
+    // normqlized color sensor
     public NormalizedColorSensor colorSensorNormalized = null;
 
-    // distance sensor
-    public DistanceSensor sensorDistance = null;
 
 
     // various possible power values applied to the motors
@@ -96,7 +94,7 @@ public class HardwareSkyBot {
     // public final static double LEFTRELICS_GRAB = 1;
 //    public final static double RIGHTRELICS_GRAB = 0;
 
-    public double distance = sensorDistance.getDistance(DistanceUnit.CM);
+   // public double distance = sensorDistance.getDistance(DistanceUnit.CM);
 
 
     /* Local OpMode members. */
@@ -118,13 +116,12 @@ public class HardwareSkyBot {
         leftDrive = hwMap.dcMotor.get("leftDrive");
         rightDrive = hwMap.dcMotor.get("rightDrive");
         armMotor = hwMap.dcMotor.get("armMotor");
-        //   extendingArm = hwMap.dcMotor.get("extendingArm");
+
         leftGrab = hwMap.servo.get("leftGrab");
         rightGrab = hwMap.servo.get("rightGrab");
         colorArm = hwMap.servo.get("colorArm");
 
         colorSensor = hwMap.get(ColorSensor.class, "sensorColor");
-        sensorDistance = hwMap.get(DistanceSensor.class, "sensorColor");
 
         colorSensorNormalized = hwMap.get(NormalizedColorSensor.class, "sensorColor");
 
