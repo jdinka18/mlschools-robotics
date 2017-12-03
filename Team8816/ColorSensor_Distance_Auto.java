@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode;
 import android.graphics.Color;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.SwitchableLight;
 
@@ -13,7 +14,7 @@ import java.util.Locale;
  */
 
 @Autonomous(name = "Color and Distance Senor Mode", group = "Auto Modes")
-
+@Disabled
 public class ColorSensor_Distance_Auto extends LinearOpMode {
 
     HardwareSkyBot robot = new HardwareSkyBot();

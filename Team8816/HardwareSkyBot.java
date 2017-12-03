@@ -37,6 +37,8 @@ import com.qualcomm.robotcore.hardware.NormalizedColorSensor;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
+import java.lang.*;
+
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 
 /**
@@ -171,6 +173,22 @@ public class HardwareSkyBot {
 
         leftDrive.setPower(POWER_STOP);
         rightDrive.setPower(POWER_STOP);
+    }
+
+    public void setUpGrippers() throws InterruptedException {
+
+        // Raise Arm with 50% power
+        armMotor.setPower(POWER_HALF);
+        Thread.sleep(800);
+
+        armMotor.setPower(POWER_STOP);
+        Thread.sleep(200);
+
+        // Get the grippers ready to grab the block
+        leftGrab.setPosition(LEFTBLOCK_READY);
+        rightGrab.setPosition(RIGHTBLOCK_READY);
+        Thread.sleep(1000);
+
     }
 
 }
