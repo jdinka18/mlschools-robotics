@@ -3,6 +3,7 @@
 - Major changes on code based on conversation with Mr. T
 - Naming file changed
 - Other minor changes
+
 2017.12.02.002
 ==================
 - Implemented two seperate classes for each color
