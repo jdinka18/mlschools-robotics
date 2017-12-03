@@ -1,10 +1,11 @@
 2017.12.03.001
 ==================
-Changes to the code are expected on meet day
-
+- Major changes on code based on conversation with Mr. T
+- Naming file changed
+- Other minor changes
 2017.12.02.002
 ==================
-Stay Tuned
+- Implemented two seperate classes for each color
 
 2017.12.02.001
 ==================
