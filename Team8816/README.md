@@ -1,3 +1,3 @@
 ## Team 8816 Info
 
-To be created... stay tuned
+This is our code for the 2017-2018 Relic Recovery competition
