@@ -1,3 +1,7 @@
+2017.12.05.001
+==================
+- Minor changes with angles for arm grippers (0º, 15º, and 45º only)
+
 2017.12.03.001
 ==================
 - Major changes on code based on conversation with Mr. T
