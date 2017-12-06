@@ -237,29 +237,33 @@ public class MainTeleOp extends OpMode {
 
         // forward position or grabbed block
         if (gamepad2.y) {
-            leftGrab.setPosition(1);
+            leftGrab.setPosition(1); // set position to 0 degrees
             rightGrab.setPosition(0);
             telemetry.addData("pressed", "Y");
 
             // side position
         } else if (gamepad2.b) {
-            leftGrab.setPosition(0.5);
-            rightGrab.setPosition(0.5);// set position to 45 degrees
+            leftGrab.setPosition(0.75); // set position to 45 degrees
+            rightGrab.setPosition(0.25);
             telemetry.addData("pressed", "B");
 
             // ready to grab position \ /
         } else if (gamepad2.a) {
-            leftGrab.setPosition(0.9); // set position to 45 degrees
-            rightGrab.setPosition(0.1); // set position to 45 degrees
+            leftGrab.setPosition(0.9167); // set position to 15 degrees
+            rightGrab.setPosition(0.0833);
             telemetry.addData("pressed", "A");
+        }
 
-            // stowed position
+            /* stowed position
         } else if (gamepad2.x) {
             leftGrab.setPosition(0);
             rightGrab.setPosition(1);
             telemetry.addData("pressed", "X");
         }
+        */
 
+
+        /* Debugging purposes - test the color sensor arm position
         if (gamepad1.a) {
 
             colorArmBest.setPosition(0.95);
@@ -277,6 +281,7 @@ public class MainTeleOp extends OpMode {
             colorArmBest.setPosition(0.5);
 
         }
+        */
 
         // Send calculated power to wheels
         leftDrive.setPower(leftPower);
