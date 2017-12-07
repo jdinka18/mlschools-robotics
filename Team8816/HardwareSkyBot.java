@@ -31,15 +31,10 @@ package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.DistanceSensor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.NormalizedColorSensor;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
-
-import java.lang.*;
-
-import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 
 /**
  * This is NOT an opmode.
@@ -68,13 +63,13 @@ public class HardwareSkyBot {
     public Servo leftGrab = null;
     public Servo rightGrab = null;
     public Servo colorArm = null;
+    public Servo topGrab = null;
 
     // color sensor
     public ColorSensor colorSensor = null;
 
     // normqlized color sensor
     public NormalizedColorSensor colorSensorNormalized = null;
-
 
 
     // various possible power values applied to the motors
@@ -96,7 +91,7 @@ public class HardwareSkyBot {
     // public final static double LEFTRELICS_GRAB = 1;
 //    public final static double RIGHTRELICS_GRAB = 0;
 
-   // public double distance = sensorDistance.getDistance(DistanceUnit.CM);
+    // public double distance = sensorDistance.getDistance(DistanceUnit.CM);
 
 
     /* Local OpMode members. */
@@ -122,6 +117,7 @@ public class HardwareSkyBot {
         leftGrab = hwMap.servo.get("leftGrab");
         rightGrab = hwMap.servo.get("rightGrab");
         colorArm = hwMap.servo.get("colorArm");
+        topGrab = hwMap.servo.get("topGrab");
 
         colorSensor = hwMap.get(ColorSensor.class, "sensorColor");
 

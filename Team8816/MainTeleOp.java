@@ -254,6 +254,11 @@ public class MainTeleOp extends OpMode {
             telemetry.addData("pressed", "A");
         }
 
+        if (gamepad2.right_bumper)
+            robot.topGrab.setPosition(1);  // top grippers will hold the block
+        else if (gamepad2.left_bumper)
+            robot.topGrab.setPosition(0.2); // stowed position
+
             /* stowed position
         } else if (gamepad2.x) {
             leftGrab.setPosition(0);
