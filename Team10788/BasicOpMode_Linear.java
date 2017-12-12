@@ -151,7 +151,7 @@ public class BasicOpMode_Linear extends LinearOpMode {
             if (gamepad2.x) //Grab block /\
             {
                 leftGrab.setPosition(0.0);
-                rightGrab.setPosition(0.3);
+                rightGrab.setPosition(0.4);
             }else
             {
                 leftGrab.setPosition(0.4);
