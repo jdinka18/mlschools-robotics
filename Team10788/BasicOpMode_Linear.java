@@ -106,8 +106,8 @@ public class BasicOpMode_Linear extends LinearOpMode {
         autoArm.setPosition(0.0);
 
         //Set grabbers to start position
-        leftGrab.setPosition(0.4);
-        rightGrab.setPosition(0.0);
+        leftGrab.setPosition(0.0);
+        rightGrab.setPosition(0.4);
 
 
         //Set arm to proper height To be done later
