@@ -122,8 +122,8 @@ public class BasicOpMode_Linear extends LinearOpMode {
             double armPower;
 
             // Let the sticks control the drive moters
-            double driveLeft =  -gamepad1.left_stick_y;
-            double driveRight  =  gamepad1.right_stick_y;
+            double driveLeft =  -gamepad1.left_stick_y * 1.2;
+            double driveRight  =  gamepad1.right_stick_y * 1.2;
 
             // Let the other stick control the arm up and down
             double armMovement = -gamepad2.left_stick_y;
