@@ -1,4 +1,4 @@
-# This is our code for the 2017-2018 Relic Recovery competition
+# This is our code for the 2017-2018 Relic Recovery season
 
 ## No code changes will occur until we know for sure that we will be invited to state qualifier on 20 January 2018
 
