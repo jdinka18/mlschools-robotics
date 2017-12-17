@@ -1,5 +1,6 @@
-###
-No code changes will occur until we know for sure that we will be invited to state qualifier on 20 January 2018
+# This is our code for the 2017-2018 Relic Recovery competition
+
+## No code changes will occur until we know for sure that we will be invited to state qualifier on 20 January 2018
 
 2017.12.16.001
 ==================
