@@ -55,19 +55,24 @@ public class SkyBot_TestUnit extends LinearOpMode {
     HardwareSkyBot robot = new HardwareSkyBot();
 
     @Override
-    public void runOpMode() throws InterruptedException {
+    public void runOpMode() {
         telemetry.addData("Test Unit", "Initialized");
         telemetry.update();
 
         // Wait for the game to start (driver presses PLAY)
         waitForStart();
 
-        // run until the end of the match (driver presses STOP)
-        while (opModeIsActive()) {
+        robot.armMotor.setPower(robot.POWER_HALF);
+        sleep(800);
 
-            robot.setUpGrippers();
+        robot.armMotor.setPower(robot.POWER_STOP);
+        sleep(200);
 
-            telemetry.update();
-        }
+        // Get the grippers ready to grab the block
+        robot.leftGrab.setPosition(robot.LEFTBLOCK_READY);
+        robot.rightGrab.setPosition(robot.RIGHTBLOCK_READY);
+        sleep(1000);
+
+
     }
 }

@@ -85,12 +85,12 @@ public class Red_ColorSensor_Auto extends LinearOpMode {
         waitForStart();
 
         // get the color sensor in position
-        robot.colorArm.setPosition(0.9);
+        robot.colorArm.setPosition(0.93);
         sleep(1500);
 
         // drive straight a little so that the color sensor is close to the jewels
         robot.driveStraight(0.3);
-        sleep(500);
+        sleep(200);
 
         robot.stopMotors();
         sleep(400);
@@ -113,27 +113,33 @@ public class Red_ColorSensor_Auto extends LinearOpMode {
 
         // NOTE: The color sensor reads toward the left side
 
-        // if red on right side
+        // if red on left side
         if (Color.red(color) > 0x90) {
             telemetry.addLine("Red");
 
             // knock off the jewel
             robot.turnRight(0.5);
-            sleep(800);
+            sleep(200);
             robot.stopMotors();
             sleep(500);
 
+            robot.driveStraight(-0.3);
+            sleep(400);
+
+            robot.stopMotors();
+            sleep(200);
 
             // stow the color arm
             robot.colorArm.setPosition(0.25);
             sleep(1000);
 
-            // straighten the robot to go to the safety zone
-            robot.turnLeft(-0.5);
-            sleep(800);
+            /* straighten the robot to go to the safety zone
+            robot.turnRight(-0.5);
+            sleep(400);
 
             robot.stopMotors();
             sleep(1000);
+            */
 
         }
 
@@ -143,26 +149,39 @@ public class Red_ColorSensor_Auto extends LinearOpMode {
 
             // knock off the jewel
             robot.turnLeft(0.5);
-            sleep(800);
+            sleep(200);
             robot.stopMotors();
             sleep(500);
+
+            robot.driveStraight(-0.3);
+            sleep(400);
 
             // stow the color arm
             robot.colorArm.setPosition(0.25);
             sleep(1000);
 
-            // straighten the robot to go to the safety zone
-            robot.turnRight(-0.5);
-            sleep(800);
+            robot.turnRight(-0.4);
+            sleep(500);
+
+            robot.stopMotors();
+            sleep(500);
+
+            /* turn right just a little to go straight toward the safety zone
+            robot.turnRight(0.4);
+            sleep(400);
 
             robot.stopMotors();
             sleep(1000);
+            */
 
 
         }
 
         // cannot see the ball's color - do nothing
         else {
+            // stow the color arm
+            robot.colorArm.setPosition(0.25);
+            sleep(1000);
             telemetry.addLine("Nothing");
             sleep(600);
         }
@@ -170,18 +189,31 @@ public class Red_ColorSensor_Auto extends LinearOpMode {
         telemetry.update();
 
 
-        // after getting the color sensor, go to safety zone
-
-
-        robot.turnRight(0.5);
-        sleep(500);
-        // go to safety zone
-
-        robot.driveStraight(0.6);
-        sleep(1000);
-
+        // Park the robot
         robot.stopMotors();
+        sleep(200);
+
+        // Get the top grippers ready for block
+        robot.leftTop.setPosition(robot.LEFTTOP_READY);
+        robot.rightTop.setPosition(robot.RIGHTTOP_READY);
+        sleep(1500);
+
+        // get the arms ready
+        robot.armMotor.setPower(robot.POWER_HALF);
         sleep(1000);
+
+        robot.armMotor.setPower(robot.POWER_STOP);
+        sleep(200);
+
+        // Get the grippers ready to grab the block
+        robot.leftGrab.setPosition(robot.LEFTBLOCK_READY);
+        robot.rightGrab.setPosition(robot.RIGHTBLOCK_READY);
+        sleep(1000);
+
+        if (robot.colorSensorNormalized instanceof SwitchableLight) {
+            ((SwitchableLight) robot.colorSensorNormalized).enableLight(false);
+        }
+        sleep(500);
 
         // Last Step - Complete!
         telemetry.addData("Path", "Complete");

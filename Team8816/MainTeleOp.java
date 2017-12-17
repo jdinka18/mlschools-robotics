@@ -31,7 +31,10 @@ package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.Gamepad;
+import com.qualcomm.robotcore.hardware.NormalizedColorSensor;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
@@ -61,13 +64,16 @@ public class MainTeleOp extends OpMode {
 
     HardwareSkyBot robot = new HardwareSkyBot();
 
-    private DcMotor leftDrive = null;
-    private DcMotor rightDrive = null;
-    private DcMotor armMotor = null;
-    //private DcMotor extendingArm = null;
-    private Servo leftGrab = null;
-    private Servo rightGrab = null;
-    private Servo colorArmBest = null;
+    public DcMotor leftDrive = null;
+    public DcMotor rightDrive = null;
+    public DcMotor armMotor = null;
+
+    public Servo leftGrab = null;
+    public Servo rightGrab = null;
+    public Servo colorArm = null;
+
+    public Servo leftTop = null;
+    public Servo rightTop = null;
 
     /*
      * Code to run ONCE when the driver hits INIT
@@ -80,14 +86,15 @@ public class MainTeleOp extends OpMode {
         // Initialize the hardware variables. Note that the strings used here as parameters
         // to 'get' must correspond to the names assigned during the robot configuration
         // step (using the FTC Robot Controller app on the phone).
-        leftDrive = hardwareMap.get(DcMotor.class, "leftDrive");
-        rightDrive = hardwareMap.get(DcMotor.class, "rightDrive");
-        armMotor = hardwareMap.get(DcMotor.class, "armMotor");
-        //     extendingArm = hardwareMap.get(DcMotor.class, "extendingArm");
-        leftGrab = hardwareMap.get(Servo.class, "leftGrab");
-        rightGrab = hardwareMap.get(Servo.class, "rightGrab");
+        leftDrive = hardwareMap.dcMotor.get("leftDrive");
+        rightDrive = hardwareMap.dcMotor.get("rightDrive");
+        armMotor = hardwareMap.dcMotor.get("armMotor");
 
-        colorArmBest = hardwareMap.get(Servo.class, "colorArm");
+        leftGrab = hardwareMap.servo.get("leftGrab");
+        rightGrab = hardwareMap.servo.get("rightGrab");
+        colorArm = hardwareMap.servo.get("colorArm");
+        leftTop = hardwareMap.servo.get("leftTop");
+        rightTop = hardwareMap.servo.get("rightTop");
 
         /*
         left and right drive = motion of robot
@@ -164,23 +171,6 @@ public class MainTeleOp extends OpMode {
         // sets the power level for lifting the grippers
         double armPower;
 
-        // power level for the sliders
-        // double extendingArmPower;
-
-        // Choose to drive using either Tank Mode, or POV Mode
-        // Comment out the method that's not used.  The default below is POV.
-
-        // POV Mode uses left stick to go forward, and right stick to turn.
-        // - This uses basic math to combine motions and is easier to drive straight.
-
-        /*
-        double drive = -gamepad1.left_stick_y;
-        double turn  =  gamepad1.right_stick_x;
-        leftPower    = Range.clip(drive + turn, -1.0, 1.0) ;
-        rightPower   = Range.clip(drive - turn, -1.0, 1.0) ;
-        */
-
-
         // get power value from gamepad1 (person 1) y position for driving
         leftPower = -gamepad1.left_stick_y;
         rightPower = gamepad1.right_stick_y;
@@ -193,42 +183,6 @@ public class MainTeleOp extends OpMode {
 
         armPower = -gamepad2.right_stick_y; // ensure the motor goes in the correct direction (full power possible)
         armPower = Range.clip(armPower, -0.5, 0.5);
-
-        /*
-        if (leftGrab.getPosition() > 0.5 && rightGrab.getPosition() < 0.5) {
-            //armPower = Range.clip(armValue, -0.5, 0.5); // restrains the value of lifting the grippers (motors' powers limited to 50%)
-            armPower = armValue;
-        }
-        */
-
-        // move the slider (extendingArm) using left (backward) and right triggers (forward)
-    /*
-        if (gamepad2.right_trigger > 0)
-            extendingArmPower = gamepad2.right_trigger;
-        else if (gamepad2.left_trigger > 0)
-            extendingArmPower = -gamepad2.left_trigger;
-        else
-            extendingArmPower = 0;
-*/
-
-        // gently raise or lower the arm (-0.5 lower | 0.5 raise)
-
-        /*
-        if(leftGrab.getPosition() > 0.5 && rightGrab.getPosition() < 0.5) {
-
-            if (gamepad2.dpad_up)
-                armPower = 0.5;
-            else if (gamepad2.dpad_down)
-                armPower = -0.5;
-            else
-                armPower = 0;
-
-        }
-        */
-
-        // double drive = gamepad2.left_sticky;
-        //armPower    = Range.clip(drive, -0.5, 0.5) ;
-
 
         // Servo control: 0-0degrees, 0.5=90 degrees, 1.0=180 degrees
         // HS-485-HB servos
@@ -243,8 +197,8 @@ public class MainTeleOp extends OpMode {
 
             // side position
         } else if (gamepad2.b) {
-            leftGrab.setPosition(0.75); // set position to 45 degrees
-            rightGrab.setPosition(0.25);
+            leftGrab.setPosition(0.85); // set position to 45 degrees
+            rightGrab.setPosition(0.15);
             telemetry.addData("pressed", "B");
 
             // ready to grab position \ /
@@ -252,41 +206,41 @@ public class MainTeleOp extends OpMode {
             leftGrab.setPosition(0.9167); // set position to 15 degrees
             rightGrab.setPosition(0.0833);
             telemetry.addData("pressed", "A");
-        }
 
-        if (gamepad2.right_bumper)
-            robot.topGrab.setPosition(1);  // top grippers will hold the block
-        else if (gamepad2.left_bumper)
-            robot.topGrab.setPosition(0.2); // stowed position
-
-            /* stowed position
         } else if (gamepad2.x) {
             leftGrab.setPosition(0);
             rightGrab.setPosition(1);
             telemetry.addData("pressed", "X");
         }
-        */
 
+        if(gamepad1.b) {
 
-        /* Debugging purposes - test the color sensor arm position
-        if (gamepad1.a) {
-
-            colorArmBest.setPosition(0.95);
-
-        } else if (gamepad1.b) {
-
-            colorArmBest.setPosition(0.90);
-
-        } else if (gamepad1.x) {
-
-            colorArmBest.setPosition(0.25);
-
-        } else if (gamepad1.y) {
-
-            colorArmBest.setPosition(0.5);
+            colorArm.setPosition(0.25); // stowed colorArm
+            telemetry.addData("pressed", "B");
 
         }
-        */
+
+
+        // top grap positions set
+        if (gamepad2.left_bumper) {
+            leftTop.setPosition(0.1);
+            rightTop.setPosition(0.9);
+            telemetry.addData("Info", "STOWED");
+
+        }
+        else if (gamepad2.dpad_up) {
+            leftTop.setPosition(0.9);
+            rightTop.setPosition(0.1);
+            telemetry.addData("Info", "UP");
+
+        }
+        else if (gamepad2.dpad_down) {
+
+            leftTop.setPosition(0.45);
+            rightTop.setPosition(0.55);
+            telemetry.addData("Info", "DOWN");
+
+        }
 
         // Send calculated power to wheels
         leftDrive.setPower(leftPower);
@@ -298,10 +252,11 @@ public class MainTeleOp extends OpMode {
         telemetry.addData("Status", "Run Time: " + runtime.toString());
         telemetry.addData("Motors", "left (%.2f), right (%.2f)", leftDrive.getPower(), rightDrive.getPower());
         telemetry.addData("Arm Motor", "(%.2f)", armMotor.getPower());
-        //  telemetry.addData("Sliding Motor", "(%.2f)", extendingArm.getPower());
         telemetry.addData("Left Grab Servo Position", leftGrab.getPosition());
         telemetry.addData("Right Grab Servo Position", rightGrab.getPosition());
-        telemetry.addData("Color Arm Position", colorArmBest.getPosition());
+        telemetry.addData("Left Top Servo Position", leftTop.getPosition());
+        telemetry.addData("Right Top Servo Position", rightTop.getPosition());
+        telemetry.addData("Color Arm Position", colorArm.getPosition());
         telemetry.update();
     }
 

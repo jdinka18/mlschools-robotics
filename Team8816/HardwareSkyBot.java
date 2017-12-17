@@ -59,11 +59,13 @@ public class HardwareSkyBot {
     public DcMotor leftDrive = null;
     public DcMotor rightDrive = null;
     public DcMotor armMotor = null;
-    // public DcMotor extendingArm = null;
+
     public Servo leftGrab = null;
     public Servo rightGrab = null;
     public Servo colorArm = null;
-    public Servo topGrab = null;
+
+    public Servo leftTop = null;
+    public Servo rightTop = null;
 
     // color sensor
     public ColorSensor colorSensor = null;
@@ -85,8 +87,11 @@ public class HardwareSkyBot {
     public final static double LEFTGRIPPER_STOWED = 0;
     public final static double RIGHTGRIPPER_STOWED = 1;
 
-    public final static double LEFTBLOCK_READY = 0.9;
-    public final static double RIGHTBLOCK_READY = 0.1;
+    public final static double LEFTBLOCK_READY = 0.85;
+    public final static double RIGHTBLOCK_READY = 0.15;
+
+    public final static double LEFTTOP_READY = 0.9;
+    public final static double RIGHTTOP_READY = 0.1;
 
     // public final static double LEFTRELICS_GRAB = 1;
 //    public final static double RIGHTRELICS_GRAB = 0;
@@ -117,7 +122,8 @@ public class HardwareSkyBot {
         leftGrab = hwMap.servo.get("leftGrab");
         rightGrab = hwMap.servo.get("rightGrab");
         colorArm = hwMap.servo.get("colorArm");
-        topGrab = hwMap.servo.get("topGrab");
+        leftTop = hwMap.servo.get("leftTop");
+        rightTop = hwMap.servo.get("rightTop");
 
         colorSensor = hwMap.get(ColorSensor.class, "sensorColor");
 
@@ -139,7 +145,6 @@ public class HardwareSkyBot {
         leftDrive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         rightDrive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         armMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        //  extendingArm.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
 
     }
