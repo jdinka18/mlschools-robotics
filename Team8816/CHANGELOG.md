@@ -1,3 +1,14 @@
+###
+No code changes will occur until we know for sure that we will be invited to state qualifier on 20 January 2018
+
+2017.12.16.001
+==================
+- Minor changes in Autonomous and TeleOpMode
+- Implemented Top Grippers in HardwareSkyBot
+- Adjusted the ColorSensor position
+- Changed MainTeleOp to brute force the usage of hardware members due to a NullPointerException in HardwareSkyBot
+- This is the final release of 2017-2018 Relic Recovery
+
 2017.12.05.001
 ==================
 - Minor changes with angles for arm grippers (0º, 15º, and 45º only)
