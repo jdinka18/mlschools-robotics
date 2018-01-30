@@ -96,7 +96,7 @@ public class KnockOffJewel_Auto extends LinearOpMode {
         // Wait for the game to start (driver presses PLAY)
         waitForStart();
 
-        robot.colorArm.setPosition(1.0);
+        robot.colorArm.setPosition(0.96);
         sleep(1500);
 
         telemetry.addData("Servo", "Moved");

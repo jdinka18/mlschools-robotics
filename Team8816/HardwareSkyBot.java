@@ -56,22 +56,22 @@ import com.qualcomm.robotcore.util.ElapsedTime;
  */
 public class HardwareSkyBot {
     /* Public OpMode members. */
-    public DcMotor leftDrive = null;
-    public DcMotor rightDrive = null;
-    public DcMotor armMotor = null;
+    public DcMotor leftDrive;
+    public DcMotor rightDrive;
+    public DcMotor armMotor;
 
-    public Servo leftGrab = null;
-    public Servo rightGrab = null;
-    public Servo colorArm = null;
+    public Servo leftGrab;
+    public Servo rightGrab;
+    public Servo colorArm;
 
-    public Servo leftTop = null;
-    public Servo rightTop = null;
+    public Servo leftTop;
+    public Servo rightTop;
 
     // color sensor
-    public ColorSensor colorSensor = null;
+    public ColorSensor colorSensor;
 
     // normqlized color sensor
-    public NormalizedColorSensor colorSensorNormalized = null;
+    public NormalizedColorSensor colorSensorNormalized;
 
 
     // various possible power values applied to the motors
@@ -101,7 +101,6 @@ public class HardwareSkyBot {
 
     /* Local OpMode members. */
     HardwareMap hwMap = null;
-    private ElapsedTime period = new ElapsedTime();
 
     /* Constructor */
     public HardwareSkyBot() {
@@ -132,14 +131,6 @@ public class HardwareSkyBot {
         // This will allow motors to rotate in same direction
         leftDrive.setDirection(DcMotor.Direction.REVERSE);
 
-        // Set all motors to zero power
-        leftDrive.setPower(POWER_STOP);
-        rightDrive.setPower(POWER_STOP);
-        armMotor.setPower(POWER_STOP);
-        //  extendingArm.setPower(POWER_STOP);
-
-        //
-
         // Set all motors to run without encoders.
         // May want to use RUN_USING_ENCODERS if encoders are installed.
         leftDrive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
@@ -165,8 +156,10 @@ public class HardwareSkyBot {
 
     public void driveStraight(double power) {
 
-        leftDrive.setPower(power);
-        rightDrive.setPower(power);
+        double pwr = power;
+
+        leftDrive.setPower(pwr);
+        rightDrive.setPower(pwr);
 
     }
 
@@ -174,6 +167,16 @@ public class HardwareSkyBot {
 
         leftDrive.setPower(POWER_STOP);
         rightDrive.setPower(POWER_STOP);
+    }
+
+    public void grabBlocks() throws InterruptedException {
+
+        leftGrab.setPosition(1); // set position to 0 degrees
+        rightGrab.setPosition(0);
+        leftTop.setPosition(0.6);
+        rightTop.setPosition(0.4);
+        Thread.sleep(1000);
+
     }
 
     public void setUpGrippers() throws InterruptedException {
@@ -190,6 +193,15 @@ public class HardwareSkyBot {
         rightGrab.setPosition(RIGHTBLOCK_READY);
         Thread.sleep(1000);
 
+    }
+
+    public void releaseGrippers() throws InterruptedException {
+
+        // Release the grippers
+        leftGrab.setPosition(LEFTBLOCK_READY);
+        rightGrab.setPosition(RIGHTBLOCK_READY);
+        stopMotors();
+        Thread.sleep(1000);
     }
 
 }

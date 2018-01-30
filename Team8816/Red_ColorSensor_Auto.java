@@ -85,7 +85,7 @@ public class Red_ColorSensor_Auto extends LinearOpMode {
         waitForStart();
 
         // get the color sensor in position
-        robot.colorArm.setPosition(0.93);
+        robot.colorArm.setPosition(0.91);
         sleep(1500);
 
         // drive straight a little so that the color sensor is close to the jewels
@@ -193,6 +193,7 @@ public class Red_ColorSensor_Auto extends LinearOpMode {
         robot.stopMotors();
         sleep(200);
 
+        /*
         // Get the top grippers ready for block
         robot.leftTop.setPosition(robot.LEFTTOP_READY);
         robot.rightTop.setPosition(robot.RIGHTTOP_READY);
@@ -209,6 +210,7 @@ public class Red_ColorSensor_Auto extends LinearOpMode {
         robot.leftGrab.setPosition(robot.LEFTBLOCK_READY);
         robot.rightGrab.setPosition(robot.RIGHTBLOCK_READY);
         sleep(1000);
+        */
 
         if (robot.colorSensorNormalized instanceof SwitchableLight) {
             ((SwitchableLight) robot.colorSensorNormalized).enableLight(false);

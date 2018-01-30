@@ -81,11 +81,13 @@ public class Blue_ColorSensor_Auto extends LinearOpMode {
             ((SwitchableLight) robot.colorSensorNormalized).enableLight(true);
         }
 
+
+
         // Wait for the game to start (driver presses PLAY)
         waitForStart();
 
         // get the color sensor in position
-        robot.colorArm.setPosition(0.93);
+        robot.colorArm.setPosition(0.91);
         sleep(1500);
 
         // drive straight a little so that the color sensor is close to the jewels
@@ -175,6 +177,7 @@ public class Blue_ColorSensor_Auto extends LinearOpMode {
         robot.stopMotors();
         sleep(200);
 
+        /*
         // Get the top grippers ready for block
         robot.leftTop.setPosition(robot.LEFTTOP_READY);
         robot.rightTop.setPosition(robot.RIGHTTOP_READY);
@@ -182,7 +185,7 @@ public class Blue_ColorSensor_Auto extends LinearOpMode {
 
         // get the arms ready
         robot.armMotor.setPower(robot.POWER_HALF);
-        sleep(1000);
+        sleep(400);
 
         robot.armMotor.setPower(robot.POWER_STOP);
         sleep(200);
@@ -191,6 +194,7 @@ public class Blue_ColorSensor_Auto extends LinearOpMode {
         robot.leftGrab.setPosition(robot.LEFTBLOCK_READY);
         robot.rightGrab.setPosition(robot.RIGHTBLOCK_READY);
         sleep(1000);
+        */
 
         if (robot.colorSensorNormalized instanceof SwitchableLight) {
             ((SwitchableLight) robot.colorSensorNormalized).enableLight(false);

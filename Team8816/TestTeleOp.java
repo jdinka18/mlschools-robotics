@@ -32,8 +32,10 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.NormalizedColorSensor;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
@@ -53,115 +55,63 @@ import com.qualcomm.robotcore.util.ElapsedTime;
  */
 
 @TeleOp(name = "Test Mode", group = "Test")
-@Disabled
+
 public class TestTeleOp extends LinearOpMode {
 
     // Declare OpMode members.
     private ElapsedTime runtime = new ElapsedTime();
 
-    public DcMotor leftDrive = null;
-    public DcMotor rightDrive = null;
-    public DcMotor armMotor = null;
+    public CRServo leftGrab = null;
+    public CRServo rightGrab = null;
 
-    public Servo leftGrab = null;
-    public Servo rightGrab = null;
-    public Servo colorArm = null;
-
-    public Servo leftTop = null;
-    public Servo rightTop = null;
-
-    // color sensor
-    public ColorSensor colorSensor = null;
-
-    // normqlized color sensor
-    public NormalizedColorSensor colorSensorNormalized = null;
 
     @Override
     public void runOpMode() {
         telemetry.addData("Status", "Initialized");
         telemetry.update();
 
-        // Init Hardware
+        leftGrab = hardwareMap.get(CRServo.class, "leftGrab");
+        rightGrab = hardwareMap.get(CRServo.class, "rightGrab");
 
-        HardwareSkyBot robot = new HardwareSkyBot();
+        leftGrab.setPower(0);
+        rightGrab.setPower(0);
 
-        // Define and Initialize Hardware
-        leftDrive = hardwareMap.dcMotor.get("leftDrive");
-        rightDrive = hardwareMap.dcMotor.get("rightDrive");
-        armMotor = hardwareMap.dcMotor.get("armMotor");
-
-        leftGrab = hardwareMap.servo.get("leftGrab");
-        rightGrab = hardwareMap.servo.get("rightGrab");
-        colorArm = hardwareMap.servo.get("colorArm");
-        leftTop = hardwareMap.servo.get("leftTop");
-        rightTop = hardwareMap.servo.get("rightTop");
-
-        colorSensor = hardwareMap.get(ColorSensor.class, "sensorColor");
-
-        colorSensorNormalized = hardwareMap.get(NormalizedColorSensor.class, "sensorColor");
-
-        // This will allow motors to rotate in same direction
-        leftDrive.setDirection(DcMotor.Direction.REVERSE);
 
         // Wait for the game to start (driver presses PLAY)
         waitForStart();
         runtime.reset();
 
+
         // run until the end of the match (driver presses STOP)
         while (opModeIsActive()) {
 
-            if (gamepad1.a)
-                leftTop.setPosition(0);
-            else if (gamepad1.b)
-                leftTop.setPosition(1);
+            leftGrab.setPower(0);
+            rightGrab.setPower(0);
 
-            if (gamepad1.x)
-                rightTop.setPosition(0);
-            else if (gamepad1.y)
-                rightTop.setPosition(1);
+           if(gamepad1.right_bumper)
+               leftGrab.setPower(0.3);
+           if(gamepad1.right_trigger > 0)
+               leftGrab.setPower(-0.3);
+           if(gamepad1.left_bumper)
+               rightGrab.setPower(-0.3);
+           if(gamepad1.left_trigger > 0)
+               rightGrab.setPower(0.3);
 
-            // forward position or grabbed block
-            if (gamepad2.y) {
-                leftGrab.setPosition(1); // set position to 0 degrees
-                rightGrab.setPosition(0);
-                telemetry.addData("pressed", "Y");
+           if(gamepad1.a) {
 
-                // side position
-            } else if (gamepad2.b) {
-                leftGrab.setPosition(0.75); // set position to 45 degrees
-                rightGrab.setPosition(0.25);
-                telemetry.addData("pressed", "B");
+               rightGrab.setPower(0.3);
+               leftGrab.setPower(-0.3);
 
-                // ready to grab position \ /
-            } else if (gamepad2.a) {
-                leftGrab.setPosition(0.9167); // set position to 15 degrees
-                rightGrab.setPosition(0.0833);
-                telemetry.addData("pressed", "A");
-            }
+           }
 
-            /* Debugging purposes - test the color sensor arm position
-        if (gamepad1.a) {
+           if(gamepad1.b) {
 
-            colorArmBest.setPosition(0.95);
+               rightGrab.setPower(-0.3
 
-        } else if (gamepad1.b) {
+                );
+               leftGrab.setPower(0.3);
+           }
 
-            colorArmBest.setPosition(0.90);
-
-        } else if (gamepad1.x) {
-
-            colorArmBest.setPosition(0.25);
-
-        } else if (gamepad1.y) {
-
-            colorArmBest.setPosition(0.5);
-
-        }
-        */
-
-            // Show the elapsed game time and wheel power.
-            telemetry.addData("Status", "Run Time: " + runtime.toString());
-            telemetry.update();
         }
     }
 }

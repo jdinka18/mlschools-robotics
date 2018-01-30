@@ -175,8 +175,8 @@ public class MainTeleOp extends OpMode {
         leftPower = -gamepad1.left_stick_y;
         rightPower = gamepad1.right_stick_y;
 
-        leftPower = Range.clip(leftPower, -0.6, 0.6);
-        rightPower = Range.clip(rightPower, -0.6, 0.6);
+        leftPower = Range.clip(leftPower, -0.9, 0.9);
+        rightPower = Range.clip(rightPower, -0.9, 0.9);
 
         // gently raise or lower the arm (restricted to -0.5 lower | 0.5 raise)
         // get power value from gamepad2 (person 2) y position for extending arm
@@ -193,21 +193,28 @@ public class MainTeleOp extends OpMode {
         if (gamepad2.y) {
             leftGrab.setPosition(1); // set position to 0 degrees
             rightGrab.setPosition(0);
+            leftTop.setPosition(0.6);
+            rightTop.setPosition(0.4);
             telemetry.addData("pressed", "Y");
 
             // side position
         } else if (gamepad2.b) {
             leftGrab.setPosition(0.85); // set position to 45 degrees
             rightGrab.setPosition(0.15);
+            leftTop.setPosition(1);
+            rightTop.setPosition(0);
             telemetry.addData("pressed", "B");
 
             // ready to grab position \ /
         } else if (gamepad2.a) {
             leftGrab.setPosition(0.9167); // set position to 15 degrees
             rightGrab.setPosition(0.0833);
+            leftTop.setPosition(1);
+            rightTop.setPosition(0);
             telemetry.addData("pressed", "A");
 
-        } else if (gamepad2.x) {
+            // stowed
+        } else if (gamepad2.right_bumper) {
             leftGrab.setPosition(0);
             rightGrab.setPosition(1);
             telemetry.addData("pressed", "X");
@@ -223,11 +230,12 @@ public class MainTeleOp extends OpMode {
 
         // top grap positions set
         if (gamepad2.left_bumper) {
-            leftTop.setPosition(0.1);
-            rightTop.setPosition(0.9);
+            leftTop.setPosition(0.4);
+            rightTop.setPosition(0.6);
             telemetry.addData("Info", "STOWED");
 
         }
+        /*
         else if (gamepad2.dpad_up) {
             leftTop.setPosition(0.9);
             rightTop.setPosition(0.1);
@@ -241,6 +249,7 @@ public class MainTeleOp extends OpMode {
             telemetry.addData("Info", "DOWN");
 
         }
+        */
 
         // Send calculated power to wheels
         leftDrive.setPower(leftPower);
