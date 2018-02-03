@@ -32,12 +32,13 @@ package org.firstinspires.ftc.teamcode;
 import android.graphics.Color;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.NormalizedRGBA;
 import com.qualcomm.robotcore.hardware.SwitchableLight;
 
 @Autonomous(name = "Knock Off Jewel ONLY", group = "Color Sensor")
-// @Disabled
+@Disabled
 public class KnockOffJewel_Auto extends LinearOpMode {
 
     /* Declare OpMode members. */

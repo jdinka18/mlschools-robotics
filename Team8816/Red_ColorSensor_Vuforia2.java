@@ -43,8 +43,8 @@ import org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocalizer;
 import org.firstinspires.ftc.robotcore.external.navigation.VuforiaTrackable;
 import org.firstinspires.ftc.robotcore.external.navigation.VuforiaTrackables;
 
-@Autonomous(name = "RedVu2", group = "Vuforia")
-// @Disabled
+@Autonomous(name = "Red Vuforia")
+
 public class Red_ColorSensor_Vuforia2 extends LinearOpMode {
 
     // Vuforia Stuff
@@ -98,9 +98,6 @@ public class Red_ColorSensor_Vuforia2 extends LinearOpMode {
             ((SwitchableLight) robot.colorSensorNormalized).enableLight(true);
         }
 
-        robot.grabBlocks();
-        sleep(1000);
-
         // Send telemetry message to signify robot waiting;
         telemetry.addData("Status", "Ready to run");    //
         telemetry.update();
@@ -109,6 +106,8 @@ public class Red_ColorSensor_Vuforia2 extends LinearOpMode {
         waitForStart();
 
         relicTrackables.activate(); // Activate Vuforia
+
+        sleep(1000);
 
         RelicRecoveryVuMark vuMark = RelicRecoveryVuMark.from(relicTemplate);
 
@@ -128,26 +127,26 @@ public class Red_ColorSensor_Vuforia2 extends LinearOpMode {
             isLCR = 3;
         }
 
+        sleep(500);
+
         telemetry.addData("isLCR", isLCR);
         telemetry.update();
 
         relicTrackables.deactivate();
 
         // get the color sensor in position
-        robot.colorArm.setPosition(0.85);
-        sleep(1500);
+        robot.colorArm.setPosition(0.91);
+        sleep(1000);
 
         // drive backwards a little so that the color sensor is close to the jewels
-        robot.driveStraight(0.3);
-        sleep(150);
+        robot.driveStraight(0.30);
+        sleep(130);
 
         robot.stopMotors();
-        sleep(400);
+        sleep(500);
 
         telemetry.addData("Servo", "Moved");
         telemetry.update();
-
-        sleep(1000);
 
         // Color Math
         NormalizedRGBA colors = robot.colorSensorNormalized.getNormalizedColors();
@@ -175,22 +174,18 @@ public class Red_ColorSensor_Vuforia2 extends LinearOpMode {
             sleep(400);
             robot.stopMotors();
             sleep(500);
-
-            // knock off the jewel
-            robot.turnRight(-0.5);
-            sleep(400);
-            robot.stopMotors();
-            sleep(500);
-
-            robot.driveStraight(-0.3);
-            sleep(400);
-
-            robot.stopMotors();
-            sleep(200);
-
             // stow the color arm
             robot.colorArm.setPosition(0.25);
             sleep(1000);
+            // knock off the jewel
+            robot.turnRight(-0.4);
+            sleep(400);
+            robot.stopMotors();
+            sleep(500);
+            robot.driveStraight(-0.45);
+            sleep(700);
+            robot.stopMotors();
+            sleep(200);
 
         }
 
@@ -201,23 +196,19 @@ public class Red_ColorSensor_Vuforia2 extends LinearOpMode {
             // knock off the jewel
             robot.turnLeft(0.5);
             sleep(400);
-            robot.turnLeft(-0.5);
-            sleep(400);
-            robot.stopMotors();
-            sleep(500);
-
-            robot.driveStraight(-0.3);
-            sleep(400);
-
             // stow the color arm
             robot.colorArm.setPosition(0.25);
             sleep(1000);
-
-            robot.turnRight(-0.4);
-            sleep(500);
-
+            robot.turnLeft(-0.4);
+            sleep(400);
             robot.stopMotors();
             sleep(500);
+
+            robot.driveStraight(-0.45);
+            sleep(700);
+
+            robot.stopMotors();
+            sleep(200);
 
         }
         // cannot see the ball's color - do nothing
@@ -227,30 +218,31 @@ public class Red_ColorSensor_Vuforia2 extends LinearOpMode {
             sleep(1000);
             telemetry.addLine("Nothing");
             sleep(600);
-        }
-
-        telemetry.update();
-        robot.colorArm.setPosition(0.25);
-        sleep(1000);
-
-        telemetry.update();
-
-        // Park the robot
-        robot.stopMotors();
-        sleep(500);
-
-        if (robot.colorSensorNormalized instanceof SwitchableLight) {
-            ((SwitchableLight) robot.colorSensorNormalized).enableLight(false);
-            sleep(500);
+            robot.driveStraight(-0.45);
+            sleep(700);
+            robot.stopMotors();
+            sleep(200);
         }
 
         // after this step we get to the switch cases
 
+        telemetry.addData("Driving toward the safety zone", isLCR);
+        telemetry.update();
+
+        robot.turnLeft(0.3);
+        sleep(800);
+        robot.driveStraight(0.4);
+        sleep(700);
+
+
         telemetry.addData("Using the Vuforia...", isLCR);
         telemetry.update();
-        sleep(1500);
+        sleep(500);
 
         // color red and color blue are different...
+
+
+        /*
 
         switch (isLCR) {
 
@@ -272,27 +264,39 @@ public class Red_ColorSensor_Vuforia2 extends LinearOpMode {
 
             case 3:
                 robot.driveStraight(-0.25);
-                sleep(1500);
+                sleep(1000);
                 telemetry.addData("Vuforia 3", "turning to center");
-                robot.turnLeft(0.3);
-                sleep(700);
+                robot.turnLeft(0.5);
+                sleep(500);
                 robot.driveStraight(0.25);
                 sleep(600);
                 robot.stopMotors();
                 sleep(200);
+                robot.turnLeft(0.35);
+                sleep(500);
+                robot.driveStraight(0.35);
+                sleep(300);
+                robot.stopMotors();
+                sleep(500);
                 telemetry.addLine("Got to spot");
                 break;
 
             default:
                 robot.driveStraight(-0.25);
-                sleep(1500);
+                sleep(1000);
                 telemetry.addData("Vuforia 3", "turning to center");
-                robot.turnLeft(0.3);
-                sleep(700);
+                robot.turnLeft(0.5);
+                sleep(500);
                 robot.driveStraight(0.25);
                 sleep(600);
                 robot.stopMotors();
                 sleep(200);
+                robot.turnLeft(0.35);
+                sleep(500);
+                robot.driveStraight(0.35);
+                sleep(300);
+                robot.stopMotors();
+                sleep(500);
                 telemetry.addLine("Got to spot");
                 break;
 
@@ -300,8 +304,7 @@ public class Red_ColorSensor_Vuforia2 extends LinearOpMode {
 
         telemetry.update();
 
-        robot.releaseGrippers();
-        sleep(1000);
+        */
 
         // Last Step - Complete!
         telemetry.addData("Path", "Complete");

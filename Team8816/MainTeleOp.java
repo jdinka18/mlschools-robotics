@@ -56,7 +56,7 @@ import com.qualcomm.robotcore.util.Range;
 //TODO: consider using 2 buttons: one to grab glyphs and one to grab the relics (which are smaller on top).
 
 
-@TeleOp(name = "Main TeleOp", group = "Iterative OpModes")
+@TeleOp(name = "TeleOp Mode")
 
 public class MainTeleOp extends OpMode {
     // Declare global OpMode members.
@@ -162,7 +162,7 @@ public class MainTeleOp extends OpMode {
     @Override
     public void loop() {
 
-        telemetry.addData("Status", "Interative TeleOp Mode Running");
+        telemetry.addData("Status", "TeleOp Mode Running");
 
         // Sets the power level for each driving motors
         double leftPower;
@@ -175,8 +175,8 @@ public class MainTeleOp extends OpMode {
         leftPower = -gamepad1.left_stick_y;
         rightPower = gamepad1.right_stick_y;
 
-        leftPower = Range.clip(leftPower, -0.9, 0.9);
-        rightPower = Range.clip(rightPower, -0.9, 0.9);
+        leftPower = Range.clip(leftPower, -0.7, 0.7);
+        rightPower = Range.clip(rightPower, -0.7, 0.7);
 
         // gently raise or lower the arm (restricted to -0.5 lower | 0.5 raise)
         // get power value from gamepad2 (person 2) y position for extending arm
@@ -199,8 +199,8 @@ public class MainTeleOp extends OpMode {
 
             // side position
         } else if (gamepad2.b) {
-            leftGrab.setPosition(0.85); // set position to 45 degrees
-            rightGrab.setPosition(0.15);
+            leftGrab.setPosition(0.82); // set position to 45 degrees
+            rightGrab.setPosition(0.18);
             leftTop.setPosition(1);
             rightTop.setPosition(0);
             telemetry.addData("pressed", "B");

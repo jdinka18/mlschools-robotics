@@ -32,12 +32,12 @@ package org.firstinspires.ftc.teamcode;
 import android.graphics.Color;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.NormalizedRGBA;
 import com.qualcomm.robotcore.hardware.SwitchableLight;
 
 @Autonomous(name = "Blue - Color Senor", group = "Color Sensor")
-// @Disabled
 public class Blue_ColorSensor_Auto extends LinearOpMode {
 
     /* Declare OpMode members. */
@@ -195,11 +195,6 @@ public class Blue_ColorSensor_Auto extends LinearOpMode {
         robot.rightGrab.setPosition(robot.RIGHTBLOCK_READY);
         sleep(1000);
         */
-
-        if (robot.colorSensorNormalized instanceof SwitchableLight) {
-            ((SwitchableLight) robot.colorSensorNormalized).enableLight(false);
-        }
-        sleep(500);
 
         // Last Step - Complete!
         telemetry.addData("Path", "Complete");
