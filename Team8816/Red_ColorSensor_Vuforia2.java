@@ -134,6 +134,20 @@ public class Red_ColorSensor_Vuforia2 extends LinearOpMode {
 
         relicTrackables.deactivate();
 
+        robot.leftTop.setPosition(0.9);
+        robot.rightTop.setPosition(0.1);
+        sleep(800);
+
+        robot.armMotor.setPower(robot.POWER_HALF);
+        sleep(900);
+
+        robot.armMotor.setPower(robot.POWER_STOP);
+        sleep(500);
+
+        robot.leftGrab.setPosition(robot.LEFTBLOCK_READY);
+        robot.rightGrab.setPosition(robot.RIGHTBLOCK_READY);
+        sleep(1000);
+
         // get the color sensor in position
         robot.colorArm.setPosition(0.91);
         sleep(1000);

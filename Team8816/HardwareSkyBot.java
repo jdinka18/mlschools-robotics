@@ -183,12 +183,14 @@ public class HardwareSkyBot {
 
         // Raise Arm with 50% power
         armMotor.setPower(POWER_HALF);
-        Thread.sleep(800);
+        Thread.sleep(700);
 
         armMotor.setPower(POWER_STOP);
-        Thread.sleep(200);
+        Thread.sleep(500);
 
-        // Get the grippers ready to grab the block
+        // get the grippers ready
+        leftTop.setPosition(0.6);
+        rightTop.setPosition(0.4);
         leftGrab.setPosition(LEFTBLOCK_READY);
         rightGrab.setPosition(RIGHTBLOCK_READY);
         Thread.sleep(1000);
